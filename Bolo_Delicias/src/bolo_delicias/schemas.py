@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from ..models import Cliente
+from .models import Cliente
 
 class Cliente(BaseModel):
     nome: str
