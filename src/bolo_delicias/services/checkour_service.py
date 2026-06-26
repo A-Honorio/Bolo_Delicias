@@ -1,17 +1,16 @@
-from database import db
-from models.finalizar_compra import FinalizarCompra
-from models.acompanhar_pedido import AcompanharPedido
+from sqlalchemy.orm import Session
+from models import FinalizarCompra, AcompanharPedido
 
 class FinalizarCompraService:
     
     @staticmethod
-    def processar_checkout(pedido_id, dados_pagamento):
+    def processar_checkout(db: Session, pedido_id: int, dados_pagamento: dict):
         """
         Gera o registro de finalização de compra e inicia o rastreio do pedido.
         """
 
         if not dados_pagamento.get('endereco_entrega') or not dados_pagamento.get('forma_pagamento'):
-            return {"erro": "Endereço e forma de pagamento são obrigatórios"}, 400
+            return {"erro": "Endereço e forma de pagamento são obrigatórios"}
 
         nova_finalizacao = FinalizarCompra(
             pedido_id=pedido_id,
@@ -28,10 +27,13 @@ class FinalizarCompraService:
         )
 
         try:
-            db.session.add(nova_finalizacao)
-            db.session.add(primeiro_passo)
-            db.session.commit()
-            return {"mensagem": "Compra finalizada com sucesso!", "dados": nova_finalizacao.to_dict()}, 201
+            db.add(nova_finalizacao)
+            db.add(primeiro_passo)
+            db.commit()
+            
+            db.refresh(nova_finalizacao)
+            
+            return {"mensagem": "Compra finalizada com sucesso!", "dados": nova_finalizacao.to_dict()}
         except Exception as e:
-            db.session.rollback()
-            return {"erro": f"Erro ao finalizar compra: {str(e)}"}, 500
+            db.rollback()
+            return {"erro": f"Erro ao finalizar compra: {str(e)}"}

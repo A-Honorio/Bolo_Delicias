@@ -1,12 +1,12 @@
-from ..models import carrinho
+from models import Carrinho 
 
 class CarrinhoService:
 
-    def adicionar(self, db, cliente_id, produto, quantidade):
+    def adicionar(self, db, cliente_id, produto, quantity):
         item = Carrinho(
             cliente_id=cliente_id,
             produto=produto,
-            quantidade=quantidade
+            quantidade=quantity
         )
 
         db.add(item)

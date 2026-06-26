@@ -34,5 +34,6 @@ class PedidoService:
 
         pedido.status = status
         db.commit()
+        db.refresh(pedido)
 
         return {"mensagem": "Status atualizado"}
