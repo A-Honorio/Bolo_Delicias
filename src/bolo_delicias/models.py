@@ -1,7 +1,8 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Text
-from sqlalchemy.orm import relationship
-from database import Base
+from sqlalchemy.orm import relationship, backref
+from bolo_delicias.database import Base
+
 
 class Cliente(Base):
     __tablename__ = "clientes"
@@ -43,7 +44,10 @@ class FinalizarCompra(Base):
     ponto_referencia = Column(String(150))
     data_finalizacao = Column(DateTime, default=datetime.utcnow)
 
-    pedido = relationship('Pedido', backref=relationship('finalizacao', uselist=False))
+    pedido = relationship(
+    "Pedido",
+    backref=backref("finalizacao", uselist=False)
+)
 
     def to_dict(self):
         return {
@@ -65,7 +69,10 @@ class AcompanharPedido(Base):
     observacao = Column(String(255))
     ultima_atualizacao = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    pedido = relationship('Pedido', backref=relationship('acompanhamentos', lazy=True))
+    pedido = relationship(
+    "Pedido",
+    backref=backref("acompanhamentos", lazy=True)
+)
 
     def to_dict(self):
         return {
