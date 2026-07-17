@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import AcompanharPedido
+from ..models import AcompanharPedido
 
 class AcompanharPedidoService:
 

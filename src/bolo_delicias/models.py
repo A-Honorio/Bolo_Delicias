@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Text
 from sqlalchemy.orm import relationship, backref
-from bolo_delicias.database import Base
+from .database import Base
 
 
 class Cliente(Base):

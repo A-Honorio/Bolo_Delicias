@@ -1,11 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import engine, SessionLocal, Base
-from views import router as views_router
-from schemas import Cliente as ClienteSchema, Carrinho as CarrinhoSchema
-from services.cliente_service import ClienteService
-from services.carrinho_service import CarrinhoService
-from services.pedido_service import PedidoService
+from .database import engine, SessionLocal, Base
+from .views import router as views_router
+from .schemas import ClienteCreate as ClienteSchema, CarrinhoItemCreate as CarrinhoSchema
+from .services.cliente_service import ClienteService
+from .services.carrinho_service import CarrinhoService
+from .services.pedido_service import PedidoService
 
 Base.metadata.create_all(bind=engine)
 

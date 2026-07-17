@@ -1,4 +1,4 @@
-from models import Carrinho 
+from ..models import Carrinho 
 
 class CarrinhoService:
 

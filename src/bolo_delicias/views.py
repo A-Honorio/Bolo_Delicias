@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from database import get_db
-import schemas
-import services.cliente_service as cliente_service
-import services.carrinho_service as carrinho_service
-import services.checkout_service as checkout_service
+from .database import get_db
+from . import schemas
+from .services import cliente_service
+from .services import carrinho_service
+from .services import checkout_service
 
 router = APIRouter()
 
